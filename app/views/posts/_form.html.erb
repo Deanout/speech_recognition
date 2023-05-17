@@ -1,8 +1,7 @@
-<%= form_with(model: post) do |form| %>
+<%= form_with(model: post, data: { controller: "voice-input" }) do |form| %>
   <% if post.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
         <% post.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,17 +9,17 @@
       </ul>
     </div>
   <% end %>
-
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
   </div>
-
-  <div>
-    <%= form.label :context, style: "display: block" %>
-    <%= form.text_area :context %>
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content, data: { voice_input_target: 'input' } %>
+    <span data-action="click->voice-input#record" style="cursor: pointer; text-decoration: underline" data-target="voice-input.startButton">
+      Start Recording
+    </span>
   </div>
-
   <div>
     <%= form.submit %>
   </div>
